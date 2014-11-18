@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import com.ikkerens.skyblock.events.SkyBlockEntryListener;
 import com.ikkerens.skyblock.events.SkyBlockPvPListener;
+import com.ikkerens.skyblock.events.UnownedChestListener;
 import com.ikkerens.skyblock.events.UnownedSegmentBuildListener;
 import com.ikkerens.skyblock.model.SkyBlockWorld;
 
@@ -65,6 +66,9 @@ public class SkyBlockPlugin extends MBServerPlugin implements Listener {
         if ( !config.allowBuildingInUnownedSegments() )
             pm.registerEventHandler( new UnownedSegmentBuildListener( this ) );
 
+        if ( !config.allowChestStealing() )
+            pm.registerEventHandler( new UnownedChestListener( this ) );
+
         if ( !config.allowPvP() )
             pm.registerEventHandler( new SkyBlockPvPListener( this ) );
     }
@@ -72,6 +76,7 @@ public class SkyBlockPlugin extends MBServerPlugin implements Listener {
     @Override
     public void onDisable() {
         this.< Config > getConfig().save( this );
+        this.saveConfig();
     }
 
     @EventHandler
@@ -79,6 +84,9 @@ public class SkyBlockPlugin extends MBServerPlugin implements Listener {
         final SkyBlockWorld world = this.worlds.get( event.getWorld() );
         if ( world != null )
             world.save( this );
+
+        if ( event.getWorld() == this.getServer().getMainWorld() )
+            this.saveConfig();
     }
 
     public void linkWorld( final World world, final SkyBlockWorld sbWorld ) {
