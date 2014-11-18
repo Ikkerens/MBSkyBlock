@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk7
+before_script:
+  - 'wget https://dl.dropboxusercontent.com/u/55284851/MineBuilder/MBServerApi-beta.jar'
+  - 'find src/ 2>&1 | grep .java > sources.txt'
+  - 'mkdir -v classes'
+  - 'ls -lh'
+script:
+  - 'javac -cp ./MBServerApi-beta.jar:. -d classes -sourcepath src @sources.txt'
