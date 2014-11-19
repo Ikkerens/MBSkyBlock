@@ -8,8 +8,7 @@ import com.mbserver.api.CommandExecutor;
 import com.mbserver.api.CommandSender;
 import com.mbserver.api.events.EventHandler;
 import com.mbserver.api.events.Listener;
-import com.mbserver.api.events.PostPlayerLoginEvent;
-import com.mbserver.api.events.RunMode;
+import com.mbserver.api.events.PlayerLoginEvent;
 import com.mbserver.api.game.Location;
 import com.mbserver.api.game.Player;
 import com.mbserver.api.game.World;
@@ -46,24 +45,28 @@ public class SkyBlockEntryListener implements Listener, CommandExecutor {
             }
         }
 
-        this.movePlayer( player, world );
+        this.movePlayer( player, world, false );
     }
 
-    @EventHandler( concurrency = RunMode.BLOCKING )
-    public void onLogin( final PostPlayerLoginEvent event ) {
+    @EventHandler
+    public void onLogin( final PlayerLoginEvent event ) {
         final Location loc = event.getPlayer().getLocation();
         if ( this.plugin.getWorld( loc.getWorld() ) != null )
-            if ( loc == loc.getWorld().getSpawn() )
-                this.movePlayer( event.getPlayer(), loc.getWorld() );
+            if ( loc == loc.getWorld().getSpawn() ) {
+                this.movePlayer( event.getPlayer(), loc.getWorld(), true );
+            }
     }
 
-    private void movePlayer( final Player player, final World targetWorld ) {
+    private void movePlayer( final Player player, final World targetWorld, final boolean setspawn ) {
         final SkyBlockWorld world = this.plugin.getWorld( targetWorld );
 
         SkyBlockSegment segment = world.getSegment( player );
-        if ( segment == null )
+        if ( segment == null ) {
             // Assign a new segment to this player
             segment = world.grant( player );
+            if ( setspawn )
+                player.setSpawn( segment.getSpawn() );
+        }
 
         player.teleport( segment.getSpawn() );
     }
