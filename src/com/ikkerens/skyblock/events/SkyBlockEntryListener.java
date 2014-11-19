@@ -45,6 +45,11 @@ public class SkyBlockEntryListener implements Listener, CommandExecutor {
             }
         }
 
+        if ( !player.hasPermission( "ikkerens.skyblock.worlds." + world.getWorldName() ) ) {
+            player.sendMessage( "You do not have permission to go to that skyblock world!" );
+            return;
+        }
+
         this.movePlayer( player, world, false );
     }
 

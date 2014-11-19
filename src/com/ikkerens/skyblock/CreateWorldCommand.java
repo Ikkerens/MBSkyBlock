@@ -44,6 +44,7 @@ public class CreateWorldCommand implements CommandExecutor {
                 CreateWorldCommand.this.plugin.< Config > getConfig().addWorld( sbWorld );
                 sbWorld.init( CreateWorldCommand.this.plugin );
                 sender.sendMessage( String.format( "Finished creating skyblock world named %s with segments of %d blocks.", worldName, segmentSize ) );
+                sender.sendMessage( String.format( "Don't forget to add ikkerens.skyblock.worlds.%s to the groups that are allowed to join this world.", worldName ) );
             }
         }.start();
     }
