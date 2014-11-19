@@ -3,8 +3,7 @@ package com.ikkerens.skyblock.events;
 import com.ikkerens.skyblock.SkyBlockPlugin;
 import com.ikkerens.skyblock.model.SkyBlockSegment;
 import com.ikkerens.skyblock.model.SkyBlockWorld;
-
-import com.mbserver.utils.math.MathUtils;
+import com.ikkerens.skyblock.util.MathUtils;
 
 import com.mbserver.api.events.ChestOpenEvent;
 import com.mbserver.api.events.EventHandler;
