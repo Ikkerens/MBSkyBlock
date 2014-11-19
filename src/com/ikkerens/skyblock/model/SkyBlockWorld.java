@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.ikkerens.skyblock.SkyBlockPlugin;
 
@@ -76,7 +77,7 @@ public class SkyBlockWorld {
         final int[] sizes = SkyBlockPlugin.schematic.getSizes();
 
         final int oX = ( segment.getX() + ( this.segmentSize / 2 ) ) - ( sizes[ 0 ] / 2 );
-        final int oY = 50;
+        final int oY = 60 + (new Random().nextInt( 40 ) - 20);
         final int oZ = ( segment.getZ() + ( this.segmentSize / 2 ) ) - ( sizes[ 1 ] / 2 );
 
         // Place the sky block building
