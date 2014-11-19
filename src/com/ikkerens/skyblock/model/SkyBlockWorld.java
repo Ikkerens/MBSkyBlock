@@ -77,7 +77,7 @@ public class SkyBlockWorld {
         final int[] sizes = SkyBlockPlugin.schematic.getSizes();
 
         final int oX = ( segment.getX() + ( this.segmentSize / 2 ) ) - ( sizes[ 0 ] / 2 );
-        final int oY = 60 + (new Random().nextInt( 40 ) - 20);
+        final int oY = 60 + ( new Random().nextInt( 40 ) - 20 );
         final int oZ = ( segment.getZ() + ( this.segmentSize / 2 ) ) - ( sizes[ 1 ] / 2 );
 
         // Place the sky block building
@@ -117,6 +117,9 @@ public class SkyBlockWorld {
 
         public synchronized void checkForExpansion( final SkyBlockWorld sbWorld ) {
             while ( this.unclaimedSegments.size() == 0 ) {
+                if ( this.searchRadius == 0 )
+                    this.checkClear( sbWorld, 0, 0 );
+
                 for ( int dim = ( -this.searchRadius - sbWorld.segmentSize ); dim < ( this.searchRadius + sbWorld.segmentSize ); dim += sbWorld.segmentSize ) {
                     this.checkClear( sbWorld, dim, -this.searchRadius - sbWorld.segmentSize );
                     this.checkClear( sbWorld, dim, this.searchRadius + sbWorld.segmentSize );
