@@ -89,7 +89,7 @@ public class SkyBlockWorld {
                         segment.setSpawn( Constructors.newLocation( this.world, oX + x, oY + y, oZ + z ) );
                     else {
                         this.world.setBlock( oX + x, oY + y, oZ + z, id );
-                        if ( id == 54 ) {
+                        if ( ( id & 0x00FF ) == 54 ) {
                             final Chest chest = (Chest) this.world.getBlock( oX + x, oY + y, oZ + z ).getBlockData();
                             int slot = 0;
                             chest.setItemSlot( slot++, Constructors.newItemStack( (short) 103, 1 ), false );
